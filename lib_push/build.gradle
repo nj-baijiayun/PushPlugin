@@ -1,0 +1,130 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
+
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "UMengKey", getValue("UMengKey"))
+            buildConfigField("String", "UMengSecret", getValue("UMengSecret"))
+            buildConfigField("String", "UMengWechatKey", getValue("UMengWechatKey"))
+            buildConfigField("String", "UMengWechatSecret", getValue("UMengWechatSecret"))
+            buildConfigField("String", "UMengQQKey", getValue("UMengQQKey"))
+            buildConfigField("String", "UMengQQSecret", getValue("UMengQQSecret"))
+            buildConfigField("String", "UMengSinaKey", getValue("UMengSinaKey"))
+            buildConfigField("String", "UMengSinaValue", getValue("UMengSinaValue"))
+            buildConfigField("String", "UMengSinaCallbackUrl", getValue("UMengSinaCallbackUrl"))
+        }
+        inner {
+            buildConfigField("String", "UMengKey", getValue("UMengKey"))
+            buildConfigField("String", "UMengSecret", getValue("UMengSecret"))
+            buildConfigField("String", "UMengWechatKey", getValue("UMengWechatKey"))
+            buildConfigField("String", "UMengWechatSecret", getValue("UMengWechatSecret"))
+            buildConfigField("String", "UMengQQKey", getValue("UMengQQKey"))
+            buildConfigField("String", "UMengQQSecret", getValue("UMengQQSecret"))
+            buildConfigField("String", "UMengSinaKey", getValue("UMengSinaKey"))
+            buildConfigField("String", "UMengSinaValue", getValue("UMengSinaValue"))
+            buildConfigField("String", "UMengSinaCallbackUrl", getValue("UMengSinaCallbackUrl"))
+        }
+        debug {
+            buildConfigField("String", "UMengKey", getValue("UMengKey"))
+            buildConfigField("String", "UMengSecret", getValue("UMengSecret"))
+            buildConfigField("String", "UMengWechatKey", getValue("UMengWechatKey"))
+            buildConfigField("String", "UMengWechatSecret", getValue("UMengWechatSecret"))
+            buildConfigField("String", "UMengQQKey", getValue("UMengQQKey"))
+            buildConfigField("String", "UMengQQSecret", getValue("UMengQQSecret"))
+            buildConfigField("String", "UMengSinaKey", getValue("UMengSinaKey"))
+            buildConfigField("String", "UMengSinaValue", getValue("UMengSinaValue"))
+            buildConfigField("String", "UMengSinaCallbackUrl", getValue("UMengSinaCallbackUrl"))
+        }
+
+    }
+
+}
+
+
+boolean isHasProperty(String key) {
+    if (project.getRootProject().findProject("app").hasProperty("pluginExt")) {
+        if (project.getRootProject().findProject("app").property("pluginExt").uMengExt.hasProperty(key)) {
+            return true
+        } else {
+            return false
+        }
+    } else {
+        return false
+    }
+}
+
+String getValue(String key) {
+    if (isHasProperty(key)) {
+        return "\"${project.getRootProject().findProject("app").property("pluginExt").uMengExt."$key"}\""
+    } else {
+        return "\"default\""
+    }
+
+}
+
+def appPro = project.getRootProject().findProject("app")
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+//    if (appPro.hasProperty("pluginExt")) {
+//        if (appPro.pluginExt.hasProperty("jiGuangExt")) {
+//            if (!appPro.pluginExt.jiGuangExt.JPushKey.equals("JPushKey")) {
+    println("lib_jiguang")
+    api 'cn.jiguang.sdk:jpush:3.3.2'  // 此处以JPush 3.3.2 版本为例。
+    api 'cn.jiguang.sdk:jcore:2.1.0'  // 此处以JCore 2.1.0 版本为例
+    api 'cn.jiguang.sdk:janalytics:2.1.0' // 此处以JAnalytics 2.1.0 版本为例。
+    api 'cn.jiguang.sdk:jshare:1.6.0'  // 此处以JShare 1.6.0 版本为例，具体版本请参考压缩包libs的jar包版本。
+    api 'cn.jiguang.sdk:jshare-qqmodel:1.6.0'
+    // 此处以jshare-qqmodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
+    api 'cn.jiguang.sdk:jshare-wechatmodel:1.6.0'
+    // 此处以jshare-wechatmodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
+    api 'cn.jiguang.sdk:jshare-sinamodel:1.6.0'
+    // 此处以jshare-sinamodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
+    api 'cn.jiguang.sdk:jshare-facebookmodel:1.6.0'
+    // 此处以jshare-facebookmodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
+    api 'cn.jiguang.sdk:jshare-twittermodel:1.6.0'
+    // 此处以jshare-twittermodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
+    api 'cn.jiguang.sdk:jshare-jchatpromodel:1.6.0'
+    // 此处以jshare-twittermodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
+//            }
+//        }
+//    }
+//    if (appPro.hasProperty("pluginExt")) {
+//        if (appPro.pluginExt.hasProperty("uMengExt")) {
+//            if (!appPro.pluginExt.uMengExt.UMengKey.equals("UMengKeyDefault")) {
+    //PushSDK必须依赖基础组件库，所以需要加入对应依赖
+    println("lib_umeng")
+    api 'com.umeng.umsdk:common:2.0.0'
+//PushSDK必须依赖utdid库，所以需要加入对应依赖
+    api 'com.umeng.umsdk:utdid:1.1.5.3'
+//PushSDK
+    api 'com.umeng.umsdk:push:6.0.1'
+
+    api 'com.umeng.umsdk:analytics:8.0.0'
+
+//
+//            }
+//        }
+//    }
+
+
+}

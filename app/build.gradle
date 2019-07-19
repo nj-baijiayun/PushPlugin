@@ -1,0 +1,91 @@
+apply plugin: 'com.android.application'
+apply plugin: 'myplugin'
+
+
+/*
+
+极光示例
+
+ JPushKey = "JPushKey"    //必填
+     JGQQShareKey = "JGQQShareKeyDefault"
+     JGWxShareKey = "JGWxShareKeyDefault"
+     JGSinaShareKey = "JGSinaShareKey"
+     JGFaceBookShareKey = "JGFaceBookShareKeyDefault"
+     JGQQShareSecret = "JGQQShareSecretDefault"
+     JGWxShareSecret = "JGWxShareSecretDefault"
+     JGSinaShareSecret = "JGSinaShareSecret"
+     JGFaceBookShareSecret = "JGFaceBookShareSecretDefault"
+     JGPushChannel = "developer-default"
+*
+* 友盟示例
+        UMengKey = "UMengKeyDefault" //必填
+        UMengSecret = "UMengSecret"  //必填
+*
+* */
+pluginExt {
+    packageName = "com.baijiayun.lexuemiao"
+    jiGuangExt {
+        jPushKey = "27b24cab17d3dccdbbc2bf06"    //必填
+        JGQQShareKey = "101675678"
+        JGWxShareKey = "wx8bf98806f514a1a7"
+        JGQQShareSecret = "fb58533718920a60718ffcc44b91f500"
+        JGWxShareSecret = "d86ceb0ee8ec2b54b437bbfeee5dcd96"
+    }
+    uMengExt {
+
+        UMengKey = "5d11ea630cafb21281000a64" //必填
+        UMengSecret = "b868f5418de1f1a22e88f4328c4fe88b"  //必填
+//
+
+
+    }
+}
+
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            v2SigningEnabled false
+        }
+    }
+    defaultConfig {
+        applicationId "com.baijiayun.lexuemiao"
+        minSdkVersion 15
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug{
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation project(":lib_push")
+
+}
