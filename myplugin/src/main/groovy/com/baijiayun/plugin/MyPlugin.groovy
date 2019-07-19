@@ -1,5 +1,7 @@
 package com.baijiayun.plugin
 
+import com.android.build.gradle.api.ApplicationVariant
+import com.android.build.gradle.api.BaseVariantOutput
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -70,7 +72,7 @@ class MyPlugin implements Plugin<Project> {
                 //            manifest中添加极光推送service
                 project.getRootProject().project("app").android.applicationVariants.all { variant ->  //3.2
                     variant.outputs.all { output ->
-                        output.processManifest.doLast {
+                        output.getProcessManifestProvider().get().doLast {
                             String manifestContent = manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().getText()
 
                             def manifestMap = ["</application>"    : " <service\n" +
@@ -159,9 +161,9 @@ class MyPlugin implements Plugin<Project> {
 
             if (!project.pluginExt.uMengExt.UMengKey.equals("UMengKeyDefault")) {
 
-                project.getRootProject().project("app").android.applicationVariants.all { variant ->  //3.2
-                    variant.outputs.all { output ->
-                        output.processManifest.doLast {
+                project.android. applicationVariants.all { ApplicationVariant variant ->  //3.2
+                    variant.outputs.all { BaseVariantOutput output ->
+                        output.getProcessManifestProvider().get().doLast {
                             String manifestContent = manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().getText()
 
                             def manifestMap = ["</application>": " <activity\n" +
@@ -223,228 +225,3 @@ class MyPlugin implements Plugin<Project> {
 }
 
 
-//            修改manifest
-//            project.getRootProject().project("app").android.applicationVariants.all { variant ->  //3.2
-//                variant.outputs.all { output ->
-//                    output.processManifest.doLast {
-//                        // Stores the path to the maifest.
-//                        // Stores the contents of the manifest.
-//                        String manifestContent = manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().getText()
-//                        // Changes the version code in the stored text.
-//                        println(manifestContent)
-//
-//                        def manifestMap = ['</manifest>'   : " <permission\n" +
-//                                "        android:name=\"${packageName}.permission.JPUSH_MESSAGE\"\n" +
-//                                "        android:protectionLevel=\"signature\" />\n" +
-//                                "    <uses-permission android:name=\"${packageName}.permission.JPUSH_MESSAGE\" />" +
-//                                "<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.INTERNET\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />\n" +
-//                                "\n" +
-//                                "    <!-- Optional. Required for location feature -->\n" +
-//                                "    <uses-permission android:name=\"android.permission.ACCESS_BACKGROUND_LOCATION\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\" /> <!-- 用于开启 debug 版本的应用在 6.0 系统上的层叠窗口权限 -->\n" +
-//                                "    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.ACCESS_LOCATION_EXTRA_COMMANDS\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.GET_TASKS\" />\n" +
-//                                "    <uses-permission android:name=\"android.permission.VIBRATE\" />" +
-//                                "</manifest>",
-//                                           '</application>': " <service\n" +
-//                                                   "            android:name=\"cn.jpush.android.service.PushService\"\n" +
-//                                                   "            android:enabled=\"true\"\n" +
-//                                                   "            android:exported=\"false\">\n" +
-//                                                   "            <intent-filter>\n" +
-//                                                   "                <action android:name=\"cn.jpush.android.intent.REGISTER\" />\n" +
-//                                                   "                <action android:name=\"cn.jpush.android.intent.REPORT\" />\n" +
-//                                                   "                <action android:name=\"cn.jpush.android.intent.PushService\" />\n" +
-//                                                   "                <action android:name=\"cn.jpush.android.intent.PUSH_TIME\" />\n" +
-//                                                   "            </intent-filter>\n" +
-//                                                   "        </service>\n" +
-//                                                   "\n" +
-//                                                   "        <!-- since 3.0.9 Required SDK 核心功能-->\n" +
-//                                                   "        <provider\n" +
-//                                                   "            android:name=\"cn.jpush.android.service.DataProvider\"\n" +
-//                                                   "            android:authorities=\"${project.pluginExt.providerAuthorities}\"\n" +
-//                                                   "            android:exported=\"true\" />\n" +
-//                                                   "\n" +
-//                                                   "        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->\n" +
-//                                                   "        <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->\n" +
-//                                                   "        <service\n" +
-//                                                   "            android:name=\"cn.jpush.android.service.DaemonService\"\n" +
-//                                                   "            android:enabled=\"true\"\n" +
-//                                                   "            android:exported=\"true\">\n" +
-//                                                   "            <intent-filter>\n" +
-//                                                   "                <action android:name=\"cn.jpush.android.intent.DaemonService\" />\n" +
-//                                                   "                <category android:name=\"${packageName}\" />\n" +
-//                                                   "            </intent-filter>\n" +
-//                                                   "        </service>\n" +
-//                                                   "\n" +
-//                                                   "        <!-- since 3.1.0 Required SDK 核心功能-->\n" +
-//                                                   "        <provider\n" +
-//                                                   "            android:name=\"cn.jpush.android.service.DownloadProvider\"\n" +
-//                                                   "            android:authorities=\"${project.pluginExt.downLoadAuthorities}\"\n" +
-//                                                   "            android:exported=\"true\" />\n" +
-//                                                   "\n" +
-//                                                   "        <!-- Required SDK核心功能-->\n" +
-//                                                   "        <receiver\n" +
-//                                                   "            android:name=\"cn.jpush.android.service.PushReceiver\"\n" +
-//                                                   "            android:enabled=\"true\">\n" +
-//                                                   "            <intent-filter android:priority=\"1000\">\n" +
-//                                                   "                <action android:name=\"cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY\" />\n" +
-//                                                   "                <category android:name=\"${packageName}\" />\n" +
-//                                                   "            </intent-filter>\n" +
-//                                                   "            <intent-filter>\n" +
-//                                                   "                <action android:name=\"android.intent.action.USER_PRESENT\" />\n" +
-//                                                   "                <action android:name=\"android.net.conn.CONNECTIVITY_CHANGE\" />\n" +
-//                                                   "            </intent-filter>\n" +
-//                                                   "            <!-- Optional -->\n" +
-//                                                   "            <intent-filter>\n" +
-//                                                   "                <action android:name=\"android.intent.action.PACKAGE_ADDED\" />\n" +
-//                                                   "                <action android:name=\"android.intent.action.PACKAGE_REMOVED\" />\n" +
-//                                                   "\n" +
-//                                                   "                <data android:scheme=\"package\" />\n" +
-//                                                   "            </intent-filter>\n" +
-//                                                   "        </receiver>\n" +
-//                                                   "\n" +
-//                                                   "        <!-- Required SDK核心功能-->\n" +
-//                                                   "        <activity\n" +
-//                                                   "            android:name=\"cn.jpush.android.ui.PushActivity\"\n" +
-//                                                   "            android:configChanges=\"orientation|keyboardHidden\"\n" +
-//                                                   "            android:exported=\"false\"\n" +
-//                                                   "            android:theme=\"@android:style/Theme.NoTitleBar\">\n" +
-//                                                   "            <intent-filter>\n" +
-//                                                   "                <action android:name=\"cn.jpush.android.ui.PushActivity\" />\n" +
-//                                                   "\n" +
-//                                                   "                <category android:name=\"android.intent.category.DEFAULT\" />\n" +
-//                                                   "                <category android:name=\"${packageName}\" />\n" +
-//                                                   "            </intent-filter>\n" +
-//                                                   "        </activity>\n" +
-//                                                   "        <!-- SDK核心功能-->\n" +
-//                                                   "        <activity\n" +
-//                                                   "            android:name=\"cn.jpush.android.ui.PopWinActivity\"\n" +
-//                                                   "            android:configChanges=\"orientation|keyboardHidden\"\n" +
-//                                                   "            android:exported=\"false\"\n" +
-//                                                   "            android:theme=\"@style/MyDialogStyle\">\n" +
-//                                                   "            <intent-filter>\n" +
-//                                                   "                <category android:name=\"android.intent.category.DEFAULT\" />\n" +
-//                                                   "                <category android:name=\"${packageName}\" />\n" +
-//                                                   "            </intent-filter>\n" +
-//                                                   "        </activity>\n" +
-//                                                   "\n" +
-//                                                   "        <!-- Required SDK核心功能-->\n" +
-//                                                   "        <service\n" +
-//                                                   "            android:name=\"cn.jpush.android.service.DownloadService\"\n" +
-//                                                   "            android:enabled=\"true\"\n" +
-//                                                   "            android:exported=\"false\"></service>\n" +
-//                                                   "\n" +
-//                                                   "        <!-- Required SDK核心功能-->\n" +
-//                                                   "        <receiver android:name=\"cn.jpush.android.service.AlarmReceiver\" />\n" +
-//                                                   "\n" +
-//                                                   "        <!-- Required. For publish channel feature -->\n" +
-//                                                   "        <!-- JPUSH_CHANNEL 是为了方便开发者统计APK分发渠道。-->\n" +
-//                                                   "        <!-- 例如: -->\n" +
-//                                                   "        <!-- 发到 Google Play 的APK可以设置为 google-play; -->\n" +
-//                                                   "        <!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->\n" +
-//                                                   "        <meta-data\n" +
-//                                                   "            android:name=\"JPUSH_CHANNEL\"\n" +
-//                                                   "            android:value=\"developer-default\" />\n" +
-//                                                   "        <!-- Required. AppKey copied from Portal -->\n" +
-//                                                   "        <meta-data\n" +
-//                                                   "            android:name=\"JPUSH_APPKEY\"\n" +
-//                                                   "            android:value=\"${project.pluginExt.jPushKey}\" />\n" +
-//                                                   "\n" +
-//                                                   "        <!-- Required SDK核心功能-->\n" +
-//                                                   "        <activity\n" +
-//                                                   "            android:name=\"cn.jiguang.share.android.ui.JiguangShellActivity\"\n" +
-//                                                   "            android:exported=\"true\"\n" +
-//                                                   "            android:launchMode=\"singleTask\"\n" +
-//                                                   "            android:theme=\"@android:style/Theme.Translucent.NoTitleBar\"\n" +
-//                                                   "            android:windowSoftInputMode=\"stateHidden|adjustResize\">\n" +
-//                                                   "            <!-- Optional QQ分享回调-->\n" +
-//                                                   "            <!-- scheme为“tencent”前缀再加上QQ开发者应用的appID；例如appID为123456，则scheme＝“tencent123456” -->\n" +
-//                                                   "            <intent-filter>\n" +
-//                                                   "                <data android:scheme=\"tencent${project.pluginExt.JGqqShareKey}\" />\n" +
-//                                                   "                <action android:name=\"android.intent.action.VIEW\" />\n" +
-//                                                   "\n" +
-//                                                   "                <category android:name=\"android.intent.category.BROWSABLE\" />\n" +
-//                                                   "                <category android:name=\"android.intent.category.DEFAULT\" />\n" +
-//                                                   "            </intent-filter>\n" +
-//                                                   "\n" +
-//                                                   "            <!-- Optional 新浪微博分享回调 -->\n" +
-//                                                   "            <intent-filter>\n" +
-//                                                   "                <action android:name=\"com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY\" />\n" +
-//                                                   "                <category android:name=\"android.intent.category.DEFAULT\" />\n" +
-//                                                   "            </intent-filter>\n" +
-//                                                   "\n" +
-//                                                   "            <!-- Optional 新浪微博私信回调-->\n" +
-//                                                   "            <intent-filter>\n" +
-//                                                   "                <action android:name=\"android.intent.action.VIEW\" />\n" +
-//                                                   "\n" +
-//                                                   "                <category android:name=\"android.intent.category.DEFAULT\" />\n" +
-//                                                   "                <category android:name=\"android.intent.category.BROWSABLE\" />\n" +
-//                                                   "\n" +
-//                                                   "                <data\n" +
-//                                                   "                    android:host=\"sinaweibo\"\n" +
-//                                                   "                    android:scheme=\"jsharesdk\" />\n" +
-//                                                   "            </intent-filter>\n" +
-//                                                   "        </activity>\n" +
-//                                                   "\n" +
-//                                                   "        <!-- Optional 微信分享回调,wxapi必须在包名路径下，否则回调不成功-->\n" +
-//                                                   "        <activity\n" +
-//                                                   "            android:name=\"${packageName}.wxapi.WXEntryActivity\"\n" +
-//                                                   "            android:exported=\"true\"\n" +
-//                                                   "            android:theme=\"@android:style/Theme.Translucent.NoTitleBar\" />\n" +
-//                                                   "        <activity\n" +
-//                                                   "            android:name=\"${packageName}.wxapi.WXPayEntryActivity\"\n" +
-//                                                   "            android:exported=\"true\"\n" +
-//                                                   "            android:theme=\"@android:style/Theme.Translucent.NoTitleBar\" />" +
-//                                                   "</application>"]
-////                manifest.appendNode("permission", ['android:name': "com.dsg.gradleplugindemo.permission.JPUSH_MESSAGE", 'android:protectionLevel': "signature"])
-//                        String fileContent = replaceText(manifestContent, manifestMap)
-//
-//                        manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().write(fileContent)
-//                    }
-//                }
-//            }
-
-
-//            增加buildconfig自定义属性
-//            def manifestMap =
-//                    "{\"JPUSH_PKGNAME\": \"$packageName\"," +
-//                            "\"JPUSH_APPKEY\" : \"${project.pluginExt.jPushKey}\"" +
-//                            "\"JPUSH_CHANNEL\": \"${project.pluginExt.JGPushChannel}\"}"
-//
-//
-//            Map<String, String> manifestMap = new HashMap<>();
-//            manifestMap.put("JPUSH_PKGNAME", packageName)
-//            manifestMap.put("JPUSH_APPKEY", project.pluginExt.jPushKey)
-//            manifestMap.put("JPUSH_CHANNEL", project.pluginExt.JGPushChannel)
-//
-//
-//            println("333")
-//
-//            def android = project.extensions.findByName("android")
-//            println("444")
-//
-//            if (android != null) {
-//                def defaultConfig = android["defaultConfig"]
-//                println("111")
-//
-//                defaultConfig.buildConfigField("java.util.Map<String, String>", "manifestPlaceholders", "new java.util.HashMap<String, " +
-//                        "String>() { put(\"JPUSH_PKGNAME\", \"John1\"); put(\"JPUSH_APPKEY\",  \"John2\"); put(\"JPUSH_CHANNEL\", " +
-//                        "\"John3\"); }")
-//
-//            }
-//            println("222")
-
-
-//            ###########################添加极光service
-//          manifest中添加推送service
