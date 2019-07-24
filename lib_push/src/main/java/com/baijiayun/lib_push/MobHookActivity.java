@@ -1,7 +1,8 @@
 package com.baijiayun.lib_push;
 
 
-import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -15,7 +16,7 @@ import com.umeng.analytics.MobclickAgent;
  * @time
  * @describe
  */
-public class MobHookActivity extends AppCompatActivity {
+public class MobHookActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();

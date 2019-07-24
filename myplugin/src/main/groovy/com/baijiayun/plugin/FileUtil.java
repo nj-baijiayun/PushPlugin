@@ -2,11 +2,13 @@ package com.baijiayun.plugin;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -305,6 +307,42 @@ public final class FileUtil {
                                    final File destFile) {
         return copyOrMoveFile(srcFile, destFile, false);
     }
+
+    /**
+     * Copy the file.
+     *
+     * @param destFilePath The path of destination file.
+     * @return {@code true}: success<br>{@code false}: fail
+     */
+    public static void createAndWriteFile(final String fileContent,
+                                          final String destFilePath) {
+//        createFileByDeleteOldFile(destFilePath);
+        createFileByDeleteOldFile(destFilePath);
+        writeFile(fileContent, destFilePath);
+
+
+    }
+
+    public static void writeFile(String content, String destFilePath) {
+        File file = new File(destFilePath);
+        byte[] b = content.trim().getBytes();  //将字符串转换成字节数
+        OutputStream out = null;
+        try {
+            out = new FileOutputStream(file);   //实例化OutpurStream
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+
+        //写入
+        try {
+            out.write(b);       //写入
+            out.close();        //关闭
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Copy the file.

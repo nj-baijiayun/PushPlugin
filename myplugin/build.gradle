@@ -1,5 +1,6 @@
 apply plugin: 'groovy'
-apply plugin: 'maven'
+apply from : 'upload.gradle'
+//apply plugin: 'maven'
 
 
 dependencies {
@@ -12,16 +13,16 @@ repositories {
     mavenCentral()
 }
 //设置maven deployer
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            //设置插件的GAV参数
-            pom.groupId = 'com.dsg.plugin'
-            pom.artifactId = 'myplugin'
-            pom.version = 1.0
-            //文件发布到下面目录
-            repository(url: uri('../release'))
-        }
-    }
-}
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            //设置插件的GAV参数
+//            pom.groupId = 'com.nj.baijiayun'
+//            pom.artifactId = 'pushplugin'
+//            pom.version = "1.0.0"
+//            //文件发布到下面目录
+//            repository(url: uri('../release'))
+//        }
+//    }
+//}
 

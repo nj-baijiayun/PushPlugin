@@ -1,1 +1,8 @@
-include ':app', ':myplugin', ':lib_push'
+
+include ':app',
+        ':lib_basic',
+        ':lib_push',
+        ':myplugin'
+//        ':sdk_playvideo',
+//        ':sdk_liveplay',
+//        ':sdk_common'

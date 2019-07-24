@@ -25,6 +25,7 @@ public class BJYAPP extends Application {
 
             }
         });
+
         PushHelper.getInstance().initUMengAnalytics(this);
         PushHelper.getInstance().initJGPush(this, true);
         PushHelper.getInstance().initJGShare(this, true);

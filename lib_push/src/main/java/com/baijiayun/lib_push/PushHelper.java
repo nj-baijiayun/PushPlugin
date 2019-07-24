@@ -1,8 +1,6 @@
 package com.baijiayun.lib_push;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 
 import com.dsg.lib_push.BuildConfig;
 import com.umeng.analytics.MobclickAgent;
