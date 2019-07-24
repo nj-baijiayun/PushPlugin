@@ -31,5 +31,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    api 'com.nj.baijiayun-SNAPSHOT:push:1.0.4'
+    api 'com.nj.baijiayun:push:1.0.0'
+//    api project(":lib_push")
 }

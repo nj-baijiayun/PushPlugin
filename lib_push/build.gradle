@@ -56,6 +56,15 @@ android {
 
 }
 
+project.getRootProject().subprojects {
+    repositories {
+        mavenCentral()
+        maven { url = 'https://dl.bintray.com/umsdk/release' }
+    }
+}
+
+
+
 boolean isHasProperty(String key) {
     if (project.getRootProject().findProject("app").hasProperty("pluginExt")) {
         if (project.getRootProject().findProject("app").property("pluginExt").uMengExt.hasProperty(key)) {
