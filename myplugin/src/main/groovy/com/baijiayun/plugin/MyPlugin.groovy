@@ -1,12 +1,8 @@
 package com.baijiayun.plugin
 
-import com.android.build.gradle.api.ApplicationVariant
-import com.android.build.gradle.api.BaseVariantOutput
 import com.android.build.gradle.internal.dsl.BuildType
-import com.android.build.gradle.internal.dsl.ProductFlavor
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.Task
 
 class MyPlugin implements Plugin<Project> {
 
@@ -21,48 +17,18 @@ class MyPlugin implements Plugin<Project> {
         project.tasks.findByName("preBuild").doFirst {
             project.android.buildTypes.each { BuildType buildType ->
                 buildType.manifestPlaceholders = [
-                        JPUSH_PKGNAME : "${project.pluginExt.packageName}",
+                        //这里的JPUSH_PKGNAME主要是用来替换manidest中对象
+                        JPUSH_PKGNAME : "${project.pluginExt.applicationId}",
                         JPUSH_APPKEY  : "${project.pluginExt.jiGuangExt.jPushKey}", //JPush 上注册的包名对应的 Appkey.
                         JPUSH_CHANNEL : "${project.pluginExt.jiGuangExt.JGPushChannel}", //暂时填写默认值即可.
                         TENCENT_APPID : "${project.pluginExt.jiGuangExt.JGQQShareKey}",
                         FACEBOOK_APPID: "${project.pluginExt.jiGuangExt.JGFaceBookShareKey}",
-                        JSHARE_PKGNAME: "${project.pluginExt.packageName}",
+                        //这里的分享包名,极光让我们使用appid,然后微信回调也用了这个id,所以当我们appid和包名不一样的时候,就会出问题
+//                      //所以下面做了单独处理,替换包名
+                        JSHARE_PKGNAME: "${project.pluginExt.applicationId}",
                 ]
             }
         }
-
-//        project.tasks.findByName("preBuild").doLast {
-//            project.tasks.each { Task task ->
-//                if (task.name.startsWith("check") && task.name.endsWith("Manifest")) {
-//                    println("taskName:${task.name}")
-//                    task.doLast {
-//                        println(task.project.android.defaultConfig.manifestPlaceholders)
-//                        Map manifestHolders = task.project.android.defaultConfig.manifestPlaceholders
-//                        manifestHolders.each { key, value ->
-//                            println("before  key: ${key} value:${value}")
-//                        }
-//                        manifestHolders.put("JPUSH_PKGNAME", "${project.pluginExt.packageName}")
-//                        manifestHolders.put('JPUSH_APPKEY', "${project.pluginExt.jiGuangExt.jPushKey}")
-//                        manifestHolders.put('JPUSH_CHANNEL', "${project.pluginExt.jiGuangExt.JGPushChannel}")
-//                        manifestHolders.put('TENCENT_APPID', "${project.pluginExt.jiGuangExt.JGQQShareKey}")
-//                        manifestHolders.put('FACEBOOK_APPID', "${project.pluginExt.jiGuangExt.JGFaceBookShareKey}")
-//                        manifestHolders.put('JSHARE_PKGNAME', "${project.pluginExt.packageName}")
-//                        manifestHolders = task.project.android.defaultConfig.manifestPlaceholders
-//                        manifestHolders.each { key, value ->
-//                            println("after  key: ${key} value:${value}")
-//                        }
-//                    }
-//                }
-//                if (task.name.startsWith("process") && task.name.endsWith("Manifest")) {
-//                    task.doFirst {
-//                        println(task.project.android.defaultConfig.manifestPlaceholders)
-//                        println(task.project.android.defaultConfig.manifestPlaceholders.getClass().name)
-//                    }
-//                }
-//
-//            }
-//        }
-
 
         /*
         *
@@ -71,33 +37,20 @@ class MyPlugin implements Plugin<Project> {
         *
         * */
 
-
-//
-//        project.android.defaultConfig {
-//            manifestPlaceholders = [
-//                    JPUSH_PKGNAME : "${project.pluginExt.packageName}",
-//                    JPUSH_APPKEY  : "${project.pluginExt.jiGuangExt.jPushKey}", //JPush 上注册的包名对应的 Appkey.
-//                    JPUSH_CHANNEL : "${project.pluginExt.jiGuangExt.JGPushChannel}", //暂时填写默认值即可.
-//                    TENCENT_APPID : "${project.pluginExt.jiGuangExt.JGQQShareKey}",
-//                    FACEBOOK_APPID: "${project.pluginExt.jiGuangExt.JGFaceBookShareKey}",
-//                    JSHARE_PKGNAME: "${project.pluginExt.packageName}",
-//            ]
-//            ndk {
-//                //选择要添加的对应 cpu 类型的 .so 库。
-//                abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
-//                // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
-//            }
-//
-//        }
         project.afterEvaluate {
 //            project.android
             def spear = File.separator
             def packageName = project.pluginExt.packageName
             println(packageName)
+
+            //这里遇到一个问题,就是当我们包名和appID不一样时,
+//            我们的wxapi文件夹放在包名路径下,会收不到回调.
+//            只有放在appId路径下才能成功,所以这边会在不同目录创建
             String packageNamePath = project.pluginExt.packageName.replaceAll("\\.", spear)
+            String applicationIdPath = project.pluginExt.applicationId.replaceAll("\\.", spear)
 
             def rootPath = project.projectDir.path
-            def wxDirPath = "${rootPath}${spear}src${spear}main${spear}java${spear}${packageNamePath}${spear}wxapi"
+            def wxDirPath = "${rootPath}${spear}src${spear}main${spear}java${spear}${applicationIdPath}${spear}wxapi"
             println("wxDirPath:$wxDirPath")
 //            创建wxapi文件夹
             FileUtil.createOrExistsDir(wxDirPath)
@@ -130,8 +83,12 @@ class MyPlugin implements Plugin<Project> {
 //                        processManifest  gradle3.2不支持getProcessManifestProvider
                         output.processManifest.doLast {
                             String manifestContent = manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().getText()
-
-                            def manifestMap = ["</application>"         : " <service\n" +
+                            String shareKey = "${project.pluginExt.applicationId}.wxapi.WXEntryActivity".toString()
+                            def facebookShareKey = project.pluginExt.jiGuangExt.JGFaceBookShareKey;
+                            if (facebookShareKey.equals("JGFaceBookShareKeyDefault")){
+                                facebookShareKey = project.pluginExt.applicationId;
+                            }
+                            def manifestMap = ["</application>"                                          : " <service\n" +
                                     "                        android:name=\"com.baijiayun.lib_push.LibPushService\"\n" +
                                     "                        android:enabled=\"true\"\n" +
                                     "                        android:exported=\"false\"\n" +
@@ -150,11 +107,12 @@ class MyPlugin implements Plugin<Project> {
                                     "       </intent-filter>\n" +
                                     " </receiver>" +
                                     "</application>",
-                                               "packageNameDefault"     : project.pluginExt.packageName,
-                                               jPushKeyDefault          : "${project.pluginExt.jiGuangExt.jPushKey}", //JPush 上注册的包名对应的 Appkey.
-                                               "developer-default"      : "${project.pluginExt.jiGuangExt.JGPushChannel}", //暂时填写默认值即可.
-                                               JGQQShareKeyDefault      : "${project.pluginExt.jiGuangExt.JGQQShareKey}",
-                                               JGFaceBookShareKeyDefault: "${project.pluginExt.jiGuangExt.JGFaceBookShareKey}",
+                                               "applicationIdDefault"                                    : project.pluginExt.applicationId,
+                                               jPushKeyDefault                                           : "${project.pluginExt.jiGuangExt.jPushKey}", //JPush 上注册的包名对应的 Appkey.
+                                               "developer-default"                                       : "${project.pluginExt.jiGuangExt.JGPushChannel}", //暂时填写默认值即可.
+                                               JGQQShareKeyDefault                                       : "${project.pluginExt.jiGuangExt.JGQQShareKey}",
+                                               JGFaceBookShareKeyDefault                                 : "${facebookShareKey}",
+//                                               "${project.pluginExt.applicationId}.wxapi.WXEntryActivity": "${project.pluginExt.packageName}.wxapi.WXEntryActivity"
                             ]
                             String fileContent = replaceText(manifestContent, manifestMap)
                             manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().write(fileContent)
@@ -173,7 +131,7 @@ class MyPlugin implements Plugin<Project> {
                 }
                 println("~~~~~~~~~~~~~~~~~~~~~~~~~1")
                 def wxEntryMap = [
-                        replacePackageName: "${project.pluginExt.packageName}.wxapi"
+                        replacePackageName: "${project.pluginExt.applicationId}.wxapi"
                 ]
 
                 replaceText(new File(wxShareFilePath), wxEntryMap)
@@ -208,22 +166,22 @@ class MyPlugin implements Plugin<Project> {
 
             if (!project.pluginExt.uMengExt.UMengKey.equals("UMengKeyDefault")) {
 
-                project.android.applicationVariants.all { ApplicationVariant variant ->  //3.2
-                    variant.outputs.all { BaseVariantOutput output ->
-                        output.processManifest.doLast {
-                            String manifestContent = manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().getText()
-
-                            def manifestMap = ["</application>": " <activity\n" +
-                                    "            android:name=\".wxapi.WXEntryActivity\"\n" +
-                                    "            android:configChanges=\"keyboardHidden|orientation|screenSize\"\n" +
-                                    "            android:exported=\"true\"\n" +
-                                    "            android:theme=\"@android:style/Theme.Translucent.NoTitleBar\" /></application>"]
-                            String fileContent = replaceText(manifestContent, manifestMap)
-                            manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().write(fileContent)
-
-                        }
-                    }
-                }
+//                project.android.applicationVariants.all { ApplicationVariant variant ->  //3.2
+//                    variant.outputs.all { BaseVariantOutput output ->
+//                        output.processManifest.doLast {
+//                            String manifestContent = manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().getText()
+//
+//                            def manifestMap = ["</application>": " <activity\n" +
+//                                    "            android:name=\".wxapi.WXEntryActivity\"\n" +
+//                                    "            android:configChanges=\"keyboardHidden|orientation|screenSize\"\n" +
+//                                    "            android:exported=\"true\"\n" +
+//                                    "            android:theme=\"@android:style/Theme.Translucent.NoTitleBar\" /></application>"]
+//                            String fileContent = replaceText(manifestContent, manifestMap)
+//                            manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().write(fileContent)
+//
+//                        }
+//                    }
+//                }
 
 
             }

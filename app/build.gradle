@@ -23,7 +23,8 @@ apply plugin: 'pushplugin'
 *
 * */
 pluginExt {
-    packageName = "com.baijiayun.lexuemiao"
+    applicationId = "com.baijiayun.lexuemiao"
+    packageName = "com.baijiayun.lexuemiao1"
     jiGuangExt {
         jPushKey = "27b24cab17d3dccdbbc2bf06"    //必填
         JGQQShareKey = "101675678"

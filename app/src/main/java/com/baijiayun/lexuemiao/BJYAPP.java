@@ -4,10 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.baijiayun.lib_push.PushHelper;
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.PushAgent;
 
 public class BJYAPP extends Application {
 

@@ -5,8 +5,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.baijiayun.lib_push.MobHookActivity;
 import com.baijiayun.lib_push.PushHelper;
 
