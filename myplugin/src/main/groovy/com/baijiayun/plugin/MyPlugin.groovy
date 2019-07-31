@@ -39,7 +39,7 @@ class MyPlugin implements Plugin<Project> {
 
         project.afterEvaluate {
 //            project.android
-            def spear = File.separator
+            def spear = Matcher.quoteReplacement(File.separator)
             def packageName = project.pluginExt.packageName
             println(packageName)
 
