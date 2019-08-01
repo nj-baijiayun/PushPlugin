@@ -1,8 +1,11 @@
 package com.baijiayun.plugin
 
 import com.android.build.gradle.internal.dsl.BuildType
+import it.unimi.dsi.fastutil.chars.CharSet
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+
+import java.util.regex.Matcher
 
 class MyPlugin implements Plugin<Project> {
 
@@ -24,7 +27,7 @@ class MyPlugin implements Plugin<Project> {
                         TENCENT_APPID : "${project.pluginExt.jiGuangExt.JGQQShareKey}",
                         FACEBOOK_APPID: "${project.pluginExt.jiGuangExt.JGFaceBookShareKey}",
                         //这里的分享包名,极光让我们使用appid,然后微信回调也用了这个id,所以当我们appid和包名不一样的时候,就会出问题
-//                      //所以下面做了单独处理,替换包名
+                        //所以下面做了单独处理,替换包名
                         JSHARE_PKGNAME: "${project.pluginExt.applicationId}",
                 ]
             }
@@ -85,10 +88,10 @@ class MyPlugin implements Plugin<Project> {
                             String manifestContent = manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().getText()
                             String shareKey = "${project.pluginExt.applicationId}.wxapi.WXEntryActivity".toString()
                             def facebookShareKey = project.pluginExt.jiGuangExt.JGFaceBookShareKey;
-                            if (facebookShareKey.equals("JGFaceBookShareKeyDefault")){
+                            if (facebookShareKey.equals("JGFaceBookShareKeyDefault")) {
                                 facebookShareKey = project.pluginExt.applicationId;
                             }
-                            def manifestMap = ["</application>"                                          : " <service\n" +
+                            def manifestMap = ["</application>"         : " <service\n" +
                                     "                        android:name=\"com.baijiayun.lib_push.LibPushService\"\n" +
                                     "                        android:enabled=\"true\"\n" +
                                     "                        android:exported=\"false\"\n" +
@@ -106,16 +109,35 @@ class MyPlugin implements Plugin<Project> {
                                     "            <category android:name=\"${project.pluginExt.packageName}\" />\n" +
                                     "       </intent-filter>\n" +
                                     " </receiver>" +
-                                    "</application>",
-                                               "applicationIdDefault"                                    : project.pluginExt.applicationId,
-                                               jPushKeyDefault                                           : "${project.pluginExt.jiGuangExt.jPushKey}", //JPush 上注册的包名对应的 Appkey.
-                                               "developer-default"                                       : "${project.pluginExt.jiGuangExt.JGPushChannel}", //暂时填写默认值即可.
-                                               JGQQShareKeyDefault                                       : "${project.pluginExt.jiGuangExt.JGQQShareKey}",
-                                               JGFaceBookShareKeyDefault                                 : "${facebookShareKey}",
+                                    "</application>".replaceAll("\n", System.lineSeparator()),
+                                               "applicationIdDefault"   : project.pluginExt.applicationId,
+                                               jPushKeyDefault          : "${project.pluginExt.jiGuangExt.jPushKey}",
+                                               "developer-default"      : "${project.pluginExt.jiGuangExt.JGPushChannel}",
+                                               JGQQShareKeyDefault      : "${project.pluginExt.jiGuangExt.JGQQShareKey}",
+                                               JGFaceBookShareKeyDefault: "${facebookShareKey}",
 //                                               "${project.pluginExt.applicationId}.wxapi.WXEntryActivity": "${project.pluginExt.packageName}.wxapi.WXEntryActivity"
                             ]
+                            println("</application>"         : " <service\n" +
+                                    "                        android:name=\"com.baijiayun.lib_push.LibPushService\"\n" +
+                                    "                        android:enabled=\"true\"\n" +
+                                    "                        android:exported=\"false\"\n" +
+                                    "                        android:process=\":pushcore\">\n" +
+                                    "                                <intent-filter>\n" +
+                                    "                                <action android:name=\"cn.jiguang.user.service.action\" />\n" +
+                                    "                                </intent-filter>\n" +
+                                    "        </service>" +
+                                    "<receiver\n" +
+                                    "       android:name=\"com.baijiayun.lib_push.LibPushReceiver\"\n" +
+                                    "       android:enabled=\"true\" \n" +
+                                    "       android:exported=\"false\" >\n" +
+                                    "       <intent-filter>\n" +
+                                    "            <action android:name=\"cn.jpush.android.intent.RECEIVE_MESSAGE\" />\n" +
+                                    "            <category android:name=\"${project.pluginExt.packageName}\" />\n" +
+                                    "       </intent-filter>\n" +
+                                    " </receiver>" +
+                                    "</application>".replaceAll("\n", System.lineSeparator()))
                             String fileContent = replaceText(manifestContent, manifestMap)
-                            manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().write(fileContent)
+                            manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().write(fileContent, "UTF-8")
 
                         }
                     }

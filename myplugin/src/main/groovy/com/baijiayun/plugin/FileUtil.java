@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -325,7 +326,12 @@ public final class FileUtil {
 
     public static void writeFile(String content, String destFilePath) {
         File file = new File(destFilePath);
-        byte[] b = content.trim().getBytes();  //将字符串转换成字节数
+        byte[] b = new byte[0];  //将字符串转换成字节数
+        try {
+            b = content.trim().getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         OutputStream out = null;
         try {
             out = new FileOutputStream(file);   //实例化OutpurStream
@@ -335,7 +341,7 @@ public final class FileUtil {
 
         //写入
         try {
-            out.write(b);       //写入
+            out.write(b);//写入
             out.close();        //关闭
         } catch (IOException e) {
             // TODO Auto-generated catch block
