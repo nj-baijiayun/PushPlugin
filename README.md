@@ -27,6 +27,8 @@ allprojects {
 ```
     //当前最新版本1.0.1
     api 'com.nj.baijiayun:push:1.0.1'
+    //如果遇到和支付宝支付sdk冲突,加入以下代码
+    //        exclude module: 'utdid'
 ```
 
 在app的`build.gradle`下添加配置推送配置信息
