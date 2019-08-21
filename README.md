@@ -68,8 +68,29 @@ pluginExt {
     }
 }
 ```
+### Application 文件中初始化
+```
+ PushHelper.getInstance().initUMengPush(this, new IUmengRegisterCallback() {
+            @Override
+            public void onSuccess(String s) {
+                Log.e("main1", "success");
+            }
 
-混淆配置
+            @Override
+            public void onFailure(String s, String s1) {
+
+            }
+        });
+
+        PushHelper.getInstance().initUMengAnalytics(this);
+        PushHelper.getInstance().initJGPush(this, true);
+        PushHelper.getInstance().initJGShare(this, true);
+        PushHelper.getInstance().initJGAnalytics(this,true);
+```
+
+
+### 混淆配置
+
 ```
 #极光
 -keep class cn.jiguang.** { *; }
