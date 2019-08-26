@@ -47,60 +47,60 @@ public class MainActivity extends MobHookActivity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_qq:
-                PushHelper.getInstance().thirdPlatformLogin(QQ.Name, new AuthListener() {
-                    @Override
-                    public void onComplete(Platform platform, int i, BaseResponseInfo data) {
-                        if (data instanceof AccessTokenInfo) {        //授权信息
-                            String token = ((AccessTokenInfo) data).getToken();//token
-                            long expiration = ((AccessTokenInfo) data).getExpiresIn();//token有效时间，时间戳
-                            String refresh_token = ((AccessTokenInfo) data).getRefeshToken();//refresh_token
-                            String openid = ((AccessTokenInfo) data).getOpenid();//openid
-                            //授权原始数据，开发者可自行处理
-                            String originData = data.getOriginData();
-                            Logger.dd("main1", "openid:" + openid + ",token:" + token + ",expiration:" + expiration + ",refresh_token:" + refresh_token);
-                            Logger.dd("main1", "originData:" + originData);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Platform platform, int i, int i1, Throwable throwable) {
-                        Log.e("main1","授权失败");
-                    }
-
-                    @Override
-                    public void onCancel(Platform platform, int i) {
-                        Log.e("main1","授权取消");
-
-                    }
-                });
+//                PushHelper.getInstance().thirdPlatformLogin(QQ.Name, new AuthListener() {
+//                    @Override
+//                    public void onComplete(Platform platform, int i, BaseResponseInfo data) {
+//                        if (data instanceof AccessTokenInfo) {        //授权信息
+//                            String token = ((AccessTokenInfo) data).getToken();//token
+//                            long expiration = ((AccessTokenInfo) data).getExpiresIn();//token有效时间，时间戳
+//                            String refresh_token = ((AccessTokenInfo) data).getRefeshToken();//refresh_token
+//                            String openid = ((AccessTokenInfo) data).getOpenid();//openid
+//                            //授权原始数据，开发者可自行处理
+//                            String originData = data.getOriginData();
+//                            Logger.dd("main1", "openid:" + openid + ",token:" + token + ",expiration:" + expiration + ",refresh_token:" + refresh_token);
+//                            Logger.dd("main1", "originData:" + originData);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Platform platform, int i, int i1, Throwable throwable) {
+//                        Log.e("main1","授权失败");
+//                    }
+//
+//                    @Override
+//                    public void onCancel(Platform platform, int i) {
+//                        Log.e("main1","授权取消");
+//
+//                    }
+//                });
                 break;
             case R.id.btn_wx:
-                PushHelper.getInstance().thirdPlatformLogin(Wechat.Name, new AuthListener() {
-                    @Override
-                    public void onComplete(Platform platform, int i, BaseResponseInfo data) {
-                        if (data instanceof AccessTokenInfo) {        //授权信息
-                            String token = ((AccessTokenInfo) data).getToken();//token
-                            long expiration = ((AccessTokenInfo) data).getExpiresIn();//token有效时间，时间戳
-                            String refresh_token = ((AccessTokenInfo) data).getRefeshToken();//refresh_token
-                            String openid = ((AccessTokenInfo) data).getOpenid();//openid
-                            //授权原始数据，开发者可自行处理
-                            String originData = data.getOriginData();
-                            Logger.dd("main1", "openid:" + openid + ",token:" + token + ",expiration:" + expiration + ",refresh_token:" + refresh_token);
-                            Logger.dd("main1", "originData:" + originData);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Platform platform, int i, int i1, Throwable throwable) {
-                        Log.e("main1","授权失败");
-                    }
-
-                    @Override
-                    public void onCancel(Platform platform, int i) {
-                        Log.e("main1","授权取消");
-
-                    }
-                });
+//                PushHelper.getInstance().thirdPlatformLogin(Wechat.Name, new AuthListener() {
+//                    @Override
+//                    public void onComplete(Platform platform, int i, BaseResponseInfo data) {
+//                        if (data instanceof AccessTokenInfo) {        //授权信息
+//                            String token = ((AccessTokenInfo) data).getToken();//token
+//                            long expiration = ((AccessTokenInfo) data).getExpiresIn();//token有效时间，时间戳
+//                            String refresh_token = ((AccessTokenInfo) data).getRefeshToken();//refresh_token
+//                            String openid = ((AccessTokenInfo) data).getOpenid();//openid
+//                            //授权原始数据，开发者可自行处理
+//                            String originData = data.getOriginData();
+//                            Logger.dd("main1", "openid:" + openid + ",token:" + token + ",expiration:" + expiration + ",refresh_token:" + refresh_token);
+//                            Logger.dd("main1", "originData:" + originData);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Platform platform, int i, int i1, Throwable throwable) {
+//                        Log.e("main1","授权失败");
+//                    }
+//
+//                    @Override
+//                    public void onCancel(Platform platform, int i) {
+//                        Log.e("main1","授权取消");
+//
+//                    }
+//                });
                 break;
 
             case R.id.btn_share:

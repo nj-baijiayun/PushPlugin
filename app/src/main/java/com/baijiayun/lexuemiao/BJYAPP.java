@@ -3,9 +3,11 @@ package com.baijiayun.lexuemiao;
 import android.app.Application;
 import android.util.Log;
 
+import com.baijiayun.lib_compiler.GenerateEntry;
 import com.baijiayun.lib_push.PushHelper;
 import com.umeng.message.IUmengRegisterCallback;
 
+@GenerateEntry
 public class BJYAPP extends Application {
 
     @Override
@@ -26,6 +28,6 @@ public class BJYAPP extends Application {
         PushHelper.getInstance().initUMengAnalytics(this);
         PushHelper.getInstance().initJGPush(this, true);
         PushHelper.getInstance().initJGShare(this, true);
-        PushHelper.getInstance().initJGAnalytics(this,true);
+        PushHelper.getInstance().initJGAnalytics(this, true);
     }
 }

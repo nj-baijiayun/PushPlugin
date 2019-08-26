@@ -1,6 +1,6 @@
 使用插件库可以简单的就将极光或者友盟的推送分享和统计集成进来,避免写入一些重复无意义的代码.加快开发速度
 ## 快速集成
-在工程目标的`build.gradle`文件添加仓库地址
+#### 在工程目标的`build.gradle`文件添加仓库地址
 ```
 allprojects {
     repositories {
@@ -18,20 +18,22 @@ allprojects {
 }
 
 ```
-在工程目录`builg.gradle`下的`dependencies`下添加插件依赖
+#### 在工程目录`builg.gradle`下的`dependencies`下添加插件依赖
 ```
-//当前最新版本为13
- classpath 'com.nj.baijiayun:pushplugin:1.0.13'
+//当前最新版本为1.1.0
+ classpath 'com.nj.baijiayun:pushplugin:1.1.0'
 ```
-在app目录`build.gradle`下添加push库依赖
+#### 在app目录`build.gradle`下添加push库依赖
 ```
-    //当前最新版本1.0.1
-    api 'com.nj.baijiayun:push:1.0.1'
+    //当前最新版本1.0.2
+    api 'com.nj.baijiayun:push:1.0.2'
     //如果遇到和支付宝支付sdk冲突,加入以下代码
     //        exclude module: 'utdid'
+    implementation 'com.nj.baijiayun:pushCompiler:1.0.0'
+    annotationProcessor 'com.nj.baijiayun:pushCompiler:1.0.0'
 ```
 
-在app的`build.gradle`下添加配置推送配置信息
+#### 在app的`build.gradle`下添加配置推送配置信息
 ```
 apply plugin: 'pushplugin'
 /*
@@ -87,7 +89,14 @@ pluginExt {
         PushHelper.getInstance().initJGShare(this, true);
         PushHelper.getInstance().initJGAnalytics(this,true);
 ```
+#### 给Application添加注解用于自动生成WXEntryActivity
+```
+@GenerateEntry
+public class BJYAPP extends Application {
+    ...
+}
 
+```
 
 ### 混淆配置
 

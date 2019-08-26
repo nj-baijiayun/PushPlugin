@@ -64,7 +64,6 @@ project.getRootProject().subprojects {
 }
 
 
-
 boolean isHasProperty(String key) {
     if (project.getRootProject().findProject("app").hasProperty("pluginExt")) {
         if (project.getRootProject().findProject("app").property("pluginExt").uMengExt.hasProperty(key)) {
@@ -100,8 +99,8 @@ dependencies {
     api 'cn.jiguang.sdk:jpush:3.3.2'  // 此处以JPush 3.3.2 版本为例。
     api 'cn.jiguang.sdk:jcore:2.1.0'  // 此处以JCore 2.1.0 版本为例
     api 'cn.jiguang.sdk:janalytics:2.1.0' // 此处以JAnalytics 2.1.0 版本为例。
-    api 'cn.jiguang.sdk:jshare:1.6.0'  // 此处以JShare 1.6.0 版本为例，具体版本请参考压缩包libs的jar包版本。
-    api 'cn.jiguang.sdk:jshare-qqmodel:1.6.0'
+    api 'cn.jiguang.sdk:jshare:1.7.1'  // 此处以JShare 1.6.0 版本为例，具体版本请参考压缩包libs的jar包版本。
+    api 'cn.jiguang.sdk:jshare-qqmodel:1.7.1'
     // 此处以jshare-qqmodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
     api 'cn.jiguang.sdk:jshare-wechatmodel:1.6.0'
     // 此处以jshare-wechatmodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。

@@ -1,7 +1,6 @@
 package com.baijiayun.plugin
 
 import com.android.build.gradle.internal.dsl.BuildType
-import it.unimi.dsi.fastutil.chars.CharSet
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -49,18 +48,14 @@ class MyPlugin implements Plugin<Project> {
             //这里遇到一个问题,就是当我们包名和appID不一样时,
 //            我们的wxapi文件夹放在包名路径下,会收不到回调.
 //            只有放在appId路径下才能成功,所以这边会在不同目录创建
-            String packageNamePath = project.pluginExt.packageName.replaceAll("\\.", spear)
             String applicationIdPath = project.pluginExt.applicationId.replaceAll("\\.", spear)
 
             def rootPath = project.projectDir.path
             def wxDirPath = "${rootPath}${spear}src${spear}main${spear}java${spear}${applicationIdPath}${spear}wxapi"
-            println("wxDirPath:$wxDirPath")
 //            创建wxapi文件夹
-            FileUtil.createOrExistsDir(wxDirPath)
+//            FileUtil.createOrExistsDir(wxDirPath)
 
-            String wxShareFilePath = "$wxDirPath${spear}WXEntryActivity.java"
             String wxPayFilePath = "$wxDirPath${spear}WXPayEntryActivity.java"
-            println(wxShareFilePath)
             println(project.pluginExt.jiGuangExt.jPushKey.class)
 
             //        ********************************以下是是否创建wxPayEntryactivity***********************************
@@ -86,7 +81,6 @@ class MyPlugin implements Plugin<Project> {
 //                        processManifest  gradle3.2不支持getProcessManifestProvider
                         output.processManifest.doLast {
                             String manifestContent = manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().getText()
-                            String shareKey = "${project.pluginExt.applicationId}.wxapi.WXEntryActivity".toString()
                             def facebookShareKey = project.pluginExt.jiGuangExt.JGFaceBookShareKey;
                             if (facebookShareKey.equals("JGFaceBookShareKeyDefault")) {
                                 facebookShareKey = project.pluginExt.applicationId;
@@ -115,27 +109,9 @@ class MyPlugin implements Plugin<Project> {
                                                "developer-default"      : "${project.pluginExt.jiGuangExt.JGPushChannel}",
                                                JGQQShareKeyDefault      : "${project.pluginExt.jiGuangExt.JGQQShareKey}",
                                                JGFaceBookShareKeyDefault: "${facebookShareKey}",
-//                                               "${project.pluginExt.applicationId}.wxapi.WXEntryActivity": "${project.pluginExt.packageName}.wxapi.WXEntryActivity"
+//                                               "wxapi.WXEntryActivity"  : "WXEntryActivity"
                             ]
-                            println("</application>"         : " <service\n" +
-                                    "                        android:name=\"com.baijiayun.lib_push.LibPushService\"\n" +
-                                    "                        android:enabled=\"true\"\n" +
-                                    "                        android:exported=\"false\"\n" +
-                                    "                        android:process=\":pushcore\">\n" +
-                                    "                                <intent-filter>\n" +
-                                    "                                <action android:name=\"cn.jiguang.user.service.action\" />\n" +
-                                    "                                </intent-filter>\n" +
-                                    "        </service>" +
-                                    "<receiver\n" +
-                                    "       android:name=\"com.baijiayun.lib_push.LibPushReceiver\"\n" +
-                                    "       android:enabled=\"true\" \n" +
-                                    "       android:exported=\"false\" >\n" +
-                                    "       <intent-filter>\n" +
-                                    "            <action android:name=\"cn.jpush.android.intent.RECEIVE_MESSAGE\" />\n" +
-                                    "            <category android:name=\"${project.pluginExt.packageName}\" />\n" +
-                                    "       </intent-filter>\n" +
-                                    " </receiver>" +
-                                    "</application>".replaceAll("\n", System.lineSeparator()))
+
                             String fileContent = replaceText(manifestContent, manifestMap)
                             manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().write(fileContent, "UTF-8")
 
@@ -144,29 +120,12 @@ class MyPlugin implements Plugin<Project> {
                 }
 
 
-//                创建wxapi文件
-
-                println("~~~~~~~~~~~~~~~~~~~~~~~~~")
-                if (!FileUtil.isFileExists(wxShareFilePath)) {
-                    FileUtil.createAndWriteFile(wxEntryActivity, wxShareFilePath)
-
-                }
-                println("~~~~~~~~~~~~~~~~~~~~~~~~~1")
-                def wxEntryMap = [
-                        replacePackageName: "${project.pluginExt.applicationId}.wxapi"
-                ]
-
-                replaceText(new File(wxShareFilePath), wxEntryMap)
-
-
 //            生成assest并且移动分享配置文件
                 def assetsPath = "${rootPath}${spear}src${spear}main${spear}assets"
                 FileUtil.createOrExistsDir(assetsPath)
 //
-                println("222")
                 println("jdsharepath:${assetsPath}${spear}JGShareSDK.xml")
-                FileUtil.createAndWriteFile(jgSkareSdk, "${assetsPath}${spear}JGShareSDK.xml")
-                println("111")
+                FileUtil.createAndWriteFile(jgShareSdk, "${assetsPath}${spear}JGShareSDK.xml")
                 def shareEntryMap = [
                         JGWeiboShareKeyDefault      : "${project.pluginExt.jiGuangExt.JGSinaShareKey}",
                         JGWeiboShareSecretDefault   : "${project.pluginExt.jiGuangExt.JGSinaShareSecret}",
@@ -178,35 +137,10 @@ class MyPlugin implements Plugin<Project> {
                         JGFaceBookShareSecretDefault: "${project.pluginExt.jiGuangExt.JGFaceBookShareSecret}",
 
                 ]
-                println("333")
-
                 replaceText(new File("${assetsPath}${spear}JGShareSDK.xml"), shareEntryMap)
-
             }
 
             //        ********************************以下是友盟相关***********************************
-
-            if (!project.pluginExt.uMengExt.UMengKey.equals("UMengKeyDefault")) {
-
-//                project.android.applicationVariants.all { ApplicationVariant variant ->  //3.2
-//                    variant.outputs.all { BaseVariantOutput output ->
-//                        output.processManifest.doLast {
-//                            String manifestContent = manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().getText()
-//
-//                            def manifestMap = ["</application>": " <activity\n" +
-//                                    "            android:name=\".wxapi.WXEntryActivity\"\n" +
-//                                    "            android:configChanges=\"keyboardHidden|orientation|screenSize\"\n" +
-//                                    "            android:exported=\"true\"\n" +
-//                                    "            android:theme=\"@android:style/Theme.Translucent.NoTitleBar\" /></application>"]
-//                            String fileContent = replaceText(manifestContent, manifestMap)
-//                            manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().write(fileContent)
-//
-//                        }
-//                    }
-//                }
-
-
-            }
 
         }
 
@@ -232,7 +166,7 @@ class MyPlugin implements Plugin<Project> {
 
     }
 
-    String jgSkareSdk = '''<?xml version="1.0" encoding="utf-8"?>
+    String jgShareSdk = '''<?xml version="1.0" encoding="utf-8"?>
 <DevInfor>
 
     <!-- 如果不需要支持某平台，可缺省该平台的配置-->
@@ -258,37 +192,7 @@ class MyPlugin implements Plugin<Project> {
 
 </DevInfor>
 '''
-    String wxEntryActivity = '''
-/*
- * 官网地站:http://www.mob.com
- * 技术支持QQ: 4006852216
- * 官方微信:ShareSDK   （如果发布新版本的话，我们将会第一时间通过微信将版本更新内容推送给您。如果使用过程中有任何问题，也可以通过微信与我们取得联系，我们将会在24小时内给予回复）
- *
- * Copyright (c) 2013年 mob.com. All rights reserved.
- */
 
-package replacePackageName;
-
-
-import android.content.Intent;
-import android.os.Bundle;
-
-import cn.jiguang.share.wechat.WeChatHandleActivity;
-
-
-/** 微信客户端回调activity示例 */
-public class WXEntryActivity extends WeChatHandleActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-    }
-}
-'''
     String wxPayEntryActivity = '''
 package replacePackageName;
 
