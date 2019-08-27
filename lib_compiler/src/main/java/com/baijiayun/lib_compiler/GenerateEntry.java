@@ -14,4 +14,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.TYPE)
 public @interface GenerateEntry {
+    String appId() default "";
 }

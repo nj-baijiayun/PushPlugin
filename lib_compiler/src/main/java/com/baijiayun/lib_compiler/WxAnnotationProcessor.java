@@ -33,14 +33,18 @@ public class WxAnnotationProcessor extends AbstractProcessor {
         Collection<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(GenerateEntry.class);
         List<TypeElement> types = ElementFilter.typesIn(annotatedElements);
         String packageName = null;
+        String appId = null;
 
         for (TypeElement type : types) {
             PackageElement packageElement = (PackageElement) type.getEnclosingElement();
             packageName = packageElement.getQualifiedName().toString();
+            appId = type.getAnnotation(GenerateEntry.class).appId();
         }
 
         if (packageName == null) return false;
-
+        if (!appId.equalsIgnoreCase("")) {
+            packageName = appId;
+        }
 
         // 3.生成Java源文件
         try {
