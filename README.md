@@ -165,4 +165,9 @@ public class BJYAPP extends Application {
 -keep public class **.R$*{
    public static final int *;
 }
+
+-dontwarn com.baijiayun.lib_compiler.**
+-keep class com.baijiayun.lib_compiler.**{
+    *;
+}
 ```
