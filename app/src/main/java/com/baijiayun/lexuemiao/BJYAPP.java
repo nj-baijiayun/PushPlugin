@@ -16,11 +16,12 @@ public class BJYAPP extends Application {
         PushHelper.getInstance().initUMengPush(this, new IUmengRegisterCallback() {
             @Override
             public void onSuccess(String s) {
-                Log.e("main1", "success");
+                Log.e("main1", "success:"+s);
             }
 
             @Override
             public void onFailure(String s, String s1) {
+                Log.e("main1", "s:"+s+"s1:"+s1);
 
             }
         });

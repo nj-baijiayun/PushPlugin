@@ -14,46 +14,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "UMengKey", getValue("UMengKey"))
-            buildConfigField("String", "UMengSecret", getValue("UMengSecret"))
-            buildConfigField("String", "UMengWechatKey", getValue("UMengWechatKey"))
-            buildConfigField("String", "UMengWechatSecret", getValue("UMengWechatSecret"))
-            buildConfigField("String", "UMengQQKey", getValue("UMengQQKey"))
-            buildConfigField("String", "UMengQQSecret", getValue("UMengQQSecret"))
-            buildConfigField("String", "UMengSinaKey", getValue("UMengSinaKey"))
-            buildConfigField("String", "UMengSinaValue", getValue("UMengSinaValue"))
-            buildConfigField("String", "UMengSinaCallbackUrl", getValue("UMengSinaCallbackUrl"))
-        }
-        inner {
-            buildConfigField("String", "UMengKey", getValue("UMengKey"))
-            buildConfigField("String", "UMengSecret", getValue("UMengSecret"))
-            buildConfigField("String", "UMengWechatKey", getValue("UMengWechatKey"))
-            buildConfigField("String", "UMengWechatSecret", getValue("UMengWechatSecret"))
-            buildConfigField("String", "UMengQQKey", getValue("UMengQQKey"))
-            buildConfigField("String", "UMengQQSecret", getValue("UMengQQSecret"))
-            buildConfigField("String", "UMengSinaKey", getValue("UMengSinaKey"))
-            buildConfigField("String", "UMengSinaValue", getValue("UMengSinaValue"))
-            buildConfigField("String", "UMengSinaCallbackUrl", getValue("UMengSinaCallbackUrl"))
-        }
-        debug {
-            buildConfigField("String", "UMengKey", getValue("UMengKey"))
-            buildConfigField("String", "UMengSecret", getValue("UMengSecret"))
-            buildConfigField("String", "UMengWechatKey", getValue("UMengWechatKey"))
-            buildConfigField("String", "UMengWechatSecret", getValue("UMengWechatSecret"))
-            buildConfigField("String", "UMengQQKey", getValue("UMengQQKey"))
-            buildConfigField("String", "UMengQQSecret", getValue("UMengQQSecret"))
-            buildConfigField("String", "UMengSinaKey", getValue("UMengSinaKey"))
-            buildConfigField("String", "UMengSinaValue", getValue("UMengSinaValue"))
-            buildConfigField("String", "UMengSinaCallbackUrl", getValue("UMengSinaCallbackUrl"))
-        }
-
-    }
-
 }
 
 project.getRootProject().subprojects {

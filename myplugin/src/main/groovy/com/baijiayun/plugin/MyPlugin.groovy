@@ -141,7 +141,26 @@ class MyPlugin implements Plugin<Project> {
             }
 
             //        ********************************以下是友盟相关***********************************
+            if (!project.pluginExt.uMengExt.UMengKey.equals("UMengKeyDefault")) {
+                project.getRootProject().project("app").android.applicationVariants.all { variant ->  //3.2
+                    variant.outputs.all { output ->
+//                        processManifest  gradle3.2不支持getProcessManifestProvider
+                        output.processManifest.doLast {
+                            String manifestContent = manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().getText()
 
+                            def manifestMap = [
+                                    "UMENG_DEFAULT_META_KEY" : "${project.pluginExt.uMengExt.UMengKey}",
+                                    UMENG_DEFAULT_META_SECRET: "${project.pluginExt.uMengExt.UMengSecret}",
+//                                               "wxapi.WXEntryActivity"  : "WXEntryActivity"
+                            ]
+
+                            String fileContent = replaceText(manifestContent, manifestMap)
+                            manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().write(fileContent, "UTF-8")
+
+                        }
+                    }
+                }
+            }
         }
 
 

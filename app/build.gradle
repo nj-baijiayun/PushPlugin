@@ -24,7 +24,7 @@ apply plugin: 'pushplugin'
 * */
 pluginExt {
     applicationId = "com.baijiayun.lexuemiao"
-    packageName = "com.baijiayun.lexuemiao1"
+    packageName = "com.baijiayun.lexuemiao"
     jiGuangExt {
         jPushKey = "27b24cab17d3dccdbbc2bf06"    //必填
         JGQQShareKey = "101675678"
@@ -34,8 +34,8 @@ pluginExt {
     }
     uMengExt {
 
-        UMengKey = "5d11ea630cafb21281000a64" //必填
-        UMengSecret = "b868f5418de1f1a22e88f4328c4fe88b"  //必填
+        UMengKey = "5d7ee7e2570df3d8ef000520" //必填
+        UMengSecret = "b31f682320fcfd8fcfa13614b8a101e6"  //必填
 //
 
 
@@ -87,8 +87,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-//    api 'com.nj.baijiayun:push:1.0.0'
-    implementation project(":lib_push")
+    api 'com.nj.baijiayun:push:2.0.0'
+//    implementation project(":lib_push")
 //    implementation project(":lib_compiler")
 //    annotationProcessor project(":lib_compiler")
     implementation 'com.nj.baijiayun:pushCompiler:1.0.0'

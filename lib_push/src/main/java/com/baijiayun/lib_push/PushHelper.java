@@ -2,6 +2,9 @@ package com.baijiayun.lib_push;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
 
 import com.baijiayun.lib_push.config.ShapeTypeConfig;
 import com.baijiayun.lib_push.interfaces.JShareLoginCall;
@@ -69,7 +72,7 @@ public class PushHelper {
 
     public void initUMengAnalytics(Context context) {
         UMConfigure.setLogEnabled(BuildConfig.DEBUG);
-        UMConfigure.init(context, BuildConfig.UMengKey, "Umeng", UMConfigure.DEVICE_TYPE_PHONE, BuildConfig.UMengSecret);
+        UMConfigure.init(context, getMetaData(context, "UMENG_APPKEY"), "Umeng", UMConfigure.DEVICE_TYPE_PHONE, getMetaData(context, "UMENG_SECRET"));
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
         PushAgent.getInstance(context).onAppStart();
     }
@@ -78,7 +81,7 @@ public class PushHelper {
     public void initUMengPush(Context context, IUmengRegisterCallback iUmengRegisterCallback) {
         UMConfigure.setLogEnabled(BuildConfig.DEBUG);
 
-        UMConfigure.init(context, BuildConfig.UMengKey, "Umeng", UMConfigure.DEVICE_TYPE_PHONE, BuildConfig.UMengSecret);
+        UMConfigure.init(context, getMetaData(context, "UMENG_APPKEY"), "Umeng", UMConfigure.DEVICE_TYPE_PHONE, getMetaData(context, "UMENG_SECRET"));
         PushAgent mPushAgent = PushAgent.getInstance(context);
 //注册推送服务，每次调用register方法都会回调该接口
         mPushAgent.register(iUmengRegisterCallback);
@@ -87,6 +90,18 @@ public class PushHelper {
     //    设置umeng推送点击事件
     public void setUmengNotificationClickHandler(Context context, UmengNotificationClickHandler umengNotificationClickHandler) {
         PushAgent.getInstance(context).setNotificationClickHandler(umengNotificationClickHandler);
+    }
+
+    private String getMetaData(Context context, String key) {
+        ApplicationInfo ai = null;
+        try {
+            ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        Bundle bundle = ai.metaData;
+        return bundle.getString(key);
     }
 
 

@@ -1,5 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dsg.lib_push" >
+    package="com.dsg.lib_push">
+
+
+    <application>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="UMENG_DEFAULT_META_KEY" />
+
+        <meta-data
+            android:name="UMENG_SECRET"
+            android:value="UMENG_DEFAULT_META_SECRET" />
+    </application>
 
 
 </manifest>
