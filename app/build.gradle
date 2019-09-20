@@ -87,11 +87,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    api 'com.nj.baijiayun:push:2.0.0'
+    api 'com.nj.baijiayun:push:1.0.5'
 //    implementation project(":lib_push")
 //    implementation project(":lib_compiler")
 //    annotationProcessor project(":lib_compiler")
-    implementation 'com.nj.baijiayun:pushCompiler:1.0.0'
-    annotationProcessor 'com.nj.baijiayun:pushCompiler:1.0.0'
+    implementation 'com.nj.baijiayun:pushCompiler:1.0.1'
+    annotationProcessor 'com.nj.baijiayun:pushCompiler:1.0.1'
 
 }
