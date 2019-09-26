@@ -182,37 +182,6 @@ public class BJYAPP extends Application {
 payUtils是一个两行代码实现微信支付或支付宝支付的支付库。 应对快速开发利器，让开发变得更加简单
 
 
-#### 使用说明
-
-1. 在项目module下的gradle中添加以下依赖：
-
-```
-allprojects {
-    repositories {
-    
-        google()
-        jcenter()
-        maven {
-            //release仓库地址
-            url = 'http://172.20.2.114:8081/repository/maven-releases/'
-        }
-        maven {
-            //snapshot仓库地址
-            url = 'http://172.20.2.114:8081/repository/maven-snapshots/'
-        }
-    }
-}
-```
-
-2.在dependencies下添加依赖
-```
- dependencies {
- 
-    //当前最新版本为1.0.0
-    implementation 'com.nj.baijiayun:payUtils:1.0.0'
-}
-```
-
 ### 使用介绍 
   
 Java使用 调用微信支付
@@ -321,6 +290,7 @@ AliPayConfig aliPayConfig=new AliPayConfig.Builder()
                         //isPaySuccess返回true 表示支付成功
                     }
                 }).builder();
+getLifecycle().addObserver(aliPayConfig);
  AliPayManager.getInstance().sendPay(aliPayConfig);
  ```
  
