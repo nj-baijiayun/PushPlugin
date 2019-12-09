@@ -290,7 +290,7 @@ AliPayConfig aliPayConfig=new AliPayConfig.Builder()
                         //isPaySuccess返回true 表示支付成功
                     }
                 }).builder();
-getLifecycle().addObserver(aliPayConfig);
+ getLifecycle().addObserver(aliPayConfig);
  AliPayManager.getInstance().sendPay(aliPayConfig);
  ```
  

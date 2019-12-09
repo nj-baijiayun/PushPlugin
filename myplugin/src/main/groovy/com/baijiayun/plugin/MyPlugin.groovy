@@ -204,11 +204,6 @@ class MyPlugin implements Plugin<Project> {
         AppId="JGWxShareKeyDefault"
         AppSecret="JGWxShareSecretDefault"/>
 
-    <Facebook
-        AppId="JGFaceBookShareKeyDefault"
-        AppName="JGFaceBookShareSecretDefault"
-    />
-
 </DevInfor>
 '''
 

@@ -58,7 +58,7 @@ dependencies {
     println("lib_jiguang")
     api 'cn.jiguang.sdk:jpush:3.3.2'  // 此处以JPush 3.3.2 版本为例。
     api 'cn.jiguang.sdk:jcore:2.1.0'  // 此处以JCore 2.1.0 版本为例
-    api 'cn.jiguang.sdk:janalytics:2.1.0' // 此处以JAnalytics 2.1.0 版本为例。
+//    api 'cn.jiguang.sdk:janalytics:2.1.0' // 此处以JAnalytics 2.1.0 版本为例。
     api 'cn.jiguang.sdk:jshare:1.7.1'  // 此处以JShare 1.6.0 版本为例，具体版本请参考压缩包libs的jar包版本。
     api 'cn.jiguang.sdk:jshare-qqmodel:1.7.1'
     // 此处以jshare-qqmodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
@@ -66,11 +66,11 @@ dependencies {
     // 此处以jshare-wechatmodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
     api 'cn.jiguang.sdk:jshare-sinamodel:1.7.1'
     // 此处以jshare-sinamodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
-    api 'cn.jiguang.sdk:jshare-facebookmodel:1.7.1'
+//    api 'cn.jiguang.sdk:jshare-facebookmodel:1.7.1'
     // 此处以jshare-facebookmodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
-    api 'cn.jiguang.sdk:jshare-twittermodel:1.7.1'
+//    api 'cn.jiguang.sdk:jshare-twittermodel:1.7.1'
     // 此处以jshare-twittermodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
-    api 'cn.jiguang.sdk:jshare-jchatpromodel:1.6.0'
+//    api 'cn.jiguang.sdk:jshare-jchatpromodel:1.6.0'
     // 此处以jshare-twittermodel 1.6.0  版本为例，具体版本请参考压缩包libs的jar包版本。
 //            }
 //        }
@@ -82,13 +82,18 @@ dependencies {
     println("lib_umeng")
     api 'com.umeng.umsdk:common:2.0.0'
 //PushSDK必须依赖utdid库，所以需要加入对应依赖
-    api 'com.umeng.umsdk:utdid:1.1.5.3'
+//    api 'com.umeng.umsdk:utdid:1.1.5.3'
 //PushSDK
     api 'com.umeng.umsdk:push:6.0.1'
 
     api 'com.umeng.umsdk:analytics:8.0.0'
 
-    api files('libs/alipaySdk-20180403.jar')
+    api('com.nj.baijiayun:aar:1.0.0@aar') {
+        exclude module: 'utdid'
+    }
+
+//    api files('libs/alipaySdk-20180403.jar')
+//    implementation (name: 'alipaySdk-15.6.8-20191021122514', ext: 'aar')
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.4.3'
 //
 //            }
@@ -98,5 +103,13 @@ dependencies {
     implementation "android.arch.lifecycle:runtime:1.0.3"
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0"
 
-
 }
+//project.configurations.all {
+//    resolutionStrategy.eachDependency { details ->
+//        if (details.requested.module == 'utdid') {
+//            details.useVersion "1.1.5.3"
+//        }
+//
+//    }
+//}
+

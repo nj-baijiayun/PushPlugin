@@ -19,7 +19,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import cn.jiguang.share.android.api.AuthListener;
 import cn.jiguang.share.android.api.JShareInterface;
 import cn.jiguang.share.android.api.PlatActionListener;
@@ -55,10 +54,7 @@ public class PushHelper {
         return sInsatance;
     }
 
-    public void initJGAnalytics(Context context, boolean debugMode) {
-        JAnalyticsInterface.setDebugMode(debugMode);
-        JAnalyticsInterface.init(context);
-    }
+
 
     public void initJGPush(Context context, boolean debugMode) {
         JPushInterface.setDebugMode(debugMode);
