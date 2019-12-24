@@ -96,8 +96,6 @@ dependencies {
 
     api 'com.umeng.umsdk:analytics:8.0.0'
 
-    implementation (name:'alipaySdk-15.6.8-20191021122455-noUtdid',ext:'aar')
-
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.8'
 //
 //            }
