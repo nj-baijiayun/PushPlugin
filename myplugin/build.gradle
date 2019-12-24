@@ -4,6 +4,7 @@ apply plugin: 'groovy'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group='com.nj.baijiayun'
+version = '1.0.0'
 
 dependencies {
     compile gradleApi()

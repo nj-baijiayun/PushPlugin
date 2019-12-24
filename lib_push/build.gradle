@@ -79,7 +79,7 @@ dependencies {
     println("lib_umeng")
     api 'com.umeng.umsdk:common:2.0.0'
 //PushSDK必须依赖utdid库，所以需要加入对应依赖
-//    api 'com.umeng.umsdk:utdid:1.1.5.3'
+    api 'com.umeng.umsdk:utdid:1.1.5.3'
 //PushSDK
     api 'com.umeng.umsdk:push:6.0.1'
 
@@ -89,8 +89,6 @@ dependencies {
 //        exclude module: 'utdid'
 //    }
 
-//    api files('libs/alipaySdk-20180403.jar')
-//    implementation (name: 'alipaySdk-15.6.8-20191021122514', ext: 'aar')
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.4.3'
 //
 //            }
