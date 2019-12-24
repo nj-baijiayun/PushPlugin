@@ -1,7 +1,7 @@
 
 include ':app', ':lib_compiler',
         ':lib_push',
-        ':myplugin', ':lib_alipayaar'
+        ':myplugin'
 //        ':sdk_playvideo',
 //        ':sdk_liveplay',
 //        ':sdk_common'
