@@ -87,9 +87,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-//    implementation project(":lib_push")
-//    implementation project(":lib_alipay")
-//    implementation project(":lib_compiler")
-//    annotationProcessor project(":lib_compiler")
+    implementation project(":lib_push")
+    implementation project(":lib_alipay")
+    implementation project(":lib_compiler")
+    annotationProcessor project(":lib_compiler")
 //    implementation 'com.github.nj-baijiayun:PushPlugin:1.0.4'
 }
