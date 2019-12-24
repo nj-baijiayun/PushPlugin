@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'pushplugin'
+//apply plugin: 'pushplugin'
 
 
 /*
@@ -22,25 +22,25 @@ apply plugin: 'pushplugin'
         UMengSecret = "UMengSecret"  //必填
 *
 * */
-pluginExt {
-    applicationId = "com.baijiayun.lexuemiao"
-    packageName = "com.baijiayun.lexuemiao"
-    jiGuangExt {
-        jPushKey = "27b24cab17d3dccdbbc2bf06"    //必填
-        JGQQShareKey = "101675678"
-        JGWxShareKey = "wx8bf98806f514a1a7"
-        JGQQShareSecret = "fb58533718920a60718ffcc44b91f500"
-        JGWxShareSecret = "d86ceb0ee8ec2b54b437bbfeee5dcd96"
-    }
-    uMengExt {
-
-        UMengKey = "5d7ee7e2570df3d8ef000520" //必填
-        UMengSecret = "b31f682320fcfd8fcfa13614b8a101e6"  //必填
+//pluginExt {
+//    applicationId = "com.baijiayun.lexuemiao"
+//    packageName = "com.baijiayun.lexuemiao"
+//    jiGuangExt {
+//        jPushKey = "***"    //必填
+//        JGQQShareKey = "***"
+//        JGWxShareKey = "***"
+//        JGQQShareSecret = "***"
+//        JGWxShareSecret = "***"
+//    }
+//    uMengExt {
 //
-
-
-    }
-}
+//        UMengKey = "***" //必填
+//        UMengSecret = "***"  //必填
+////
+//
+//
+//    }
+//}
 
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -87,11 +87,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-//    api 'com.nj.baijiayun:push:1.0.5'
     implementation project(":lib_push")
-//    implementation project(":lib_compiler")
-//    annotationProcessor project(":lib_compiler")
-    implementation 'com.nj.baijiayun:pushCompiler:1.0.1'
-    annotationProcessor 'com.nj.baijiayun:pushCompiler:1.0.1'
+    implementation project(":lib_compiler")
+    annotationProcessor project(":lib_compiler")
 
 }

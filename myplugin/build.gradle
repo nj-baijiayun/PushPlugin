@@ -1,7 +1,9 @@
 apply plugin: 'groovy'
-apply from : 'upload.gradle'
+//apply from : 'upload.gradle'
 //apply plugin: 'maven'
+apply plugin: 'com.github.dcendents.android-maven'
 
+group='com.nj.baijiayun'
 
 dependencies {
     compile gradleApi()

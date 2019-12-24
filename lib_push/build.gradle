@@ -49,9 +49,6 @@ def appPro = project.getRootProject().findProject("app")
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 //    if (appPro.hasProperty("pluginExt")) {
 //        if (appPro.pluginExt.hasProperty("jiGuangExt")) {
 //            if (!appPro.pluginExt.jiGuangExt.JPushKey.equals("JPushKey")) {
@@ -88,9 +85,9 @@ dependencies {
 
     api 'com.umeng.umsdk:analytics:8.0.0'
 
-    api('com.nj.baijiayun:aar:1.0.0@aar') {
-        exclude module: 'utdid'
-    }
+//    api('com.nj.baijiayun:aar:1.0.0@aar') {
+//        exclude module: 'utdid'
+//    }
 
 //    api files('libs/alipaySdk-20180403.jar')
 //    implementation (name: 'alipaySdk-15.6.8-20191021122514', ext: 'aar')
@@ -104,12 +101,4 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0"
 
 }
-//project.configurations.all {
-//    resolutionStrategy.eachDependency { details ->
-//        if (details.requested.module == 'utdid') {
-//            details.useVersion "1.1.5.3"
-//        }
-//
-//    }
-//}
 
