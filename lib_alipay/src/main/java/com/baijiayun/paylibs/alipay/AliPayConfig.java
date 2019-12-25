@@ -1,18 +1,14 @@
-package com.baijiayun.lib_push.alipay;
+package com.baijiayun.paylibs.alipay;
 
 import android.app.Activity;
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.OnLifecycleEvent;
-import android.util.Log;
 
-import com.baijiayun.lib_push.alipay.call.AliPayStatusCall;
+import com.baijiayun.paylibs.alipay.call.AliPayStatusCall;
 
 
 /**
  * 支付宝支付服务器配置
  */
-public class AliPayConfig implements LifecycleObserver {
+public class AliPayConfig {
     private Activity mActivity;
     //签名的订单，服务器返回唯一的
     private String signedOrder;
@@ -58,12 +54,5 @@ public class AliPayConfig implements LifecycleObserver {
             alPayConfig.mCall=this.mCall;
             return alPayConfig;
         }
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    public void onDestroy() {
-        Log.d("main1","onDestroy");
-        mActivity = null;
-        mCall = null;
     }
 }

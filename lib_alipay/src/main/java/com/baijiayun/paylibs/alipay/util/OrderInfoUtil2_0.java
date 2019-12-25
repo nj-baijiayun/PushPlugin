@@ -1,7 +1,7 @@
-package com.baijiayun.lib_push.alipay.util;
+package com.baijiayun.paylibs.alipay.util;
 
 
-import com.baijiayun.lib_push.alipay.AliPayUnSignOrderConfig;
+import com.baijiayun.paylibs.alipay.AliPayUnSignOrderConfig;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
