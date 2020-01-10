@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+//apply from: 'upload.gradle'
+
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.nj.baijiayun'
+version = '1.0.0'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
+
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation files ('libs/alipaySdk-15.6.8-20191021122455-noUtdid.aar')
+    implementation "android.arch.lifecycle:runtime:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+}
+

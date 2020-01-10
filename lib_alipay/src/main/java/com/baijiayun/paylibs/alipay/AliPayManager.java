@@ -1,14 +1,18 @@
-package com.baijiayun.lib_push.alipay;
+package com.baijiayun.paylibs.alipay;
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.alipay.sdk.app.PayTask;
-import com.baijiayun.lib_push.alipay.util.OrderInfoUtil2_0;
-import com.baijiayun.lib_push.alipay.util.PayResult;
+import com.baijiayun.paylibs.alipay.util.OrderInfoUtil2_0;
+import com.baijiayun.paylibs.alipay.util.PayResult;
 
 import java.util.Map;
 
@@ -39,6 +43,10 @@ public class AliPayManager {
      */
     public void sendPay(AliPayConfig aliPayConfig){
         this.aliPayConfig=aliPayConfig;
+//        if (!isAliPayInstalled(aliPayConfig.getmActivity())){
+//            Toast.makeText(aliPayConfig.getmActivity(), "请先下载支付宝APP", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         payAliPay();
     }
 
@@ -60,8 +68,6 @@ public class AliPayManager {
         return orderInfo;
     }
     private void payAliPay(){
-
-
         Runnable payRunnable = new Runnable() {
 
             @Override
@@ -118,4 +124,22 @@ public class AliPayManager {
             }
         }
         };
+
+
+
+
+
+
+    /**
+     * 检测是否安装支付宝
+     * @param context
+     * @return
+     */
+    public static boolean isAliPayInstalled(Context context) {
+        Uri uri = Uri.parse("alipays://platformapi/startApp");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        ComponentName componentName = intent.resolveActivity(context.getPackageManager());
+        return componentName != null;
+    }
+
 }

@@ -1,8 +1,8 @@
-package com.baijiayun.lib_push.alipay;
+package com.baijiayun.paylibs.alipay;
 
 import android.app.Activity;
 
-import com.baijiayun.lib_push.alipay.call.AliPayStatusCall;
+import com.baijiayun.paylibs.alipay.call.AliPayStatusCall;
 
 
 /**

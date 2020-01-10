@@ -56,26 +56,26 @@ public class PushHelper {
 
 
 
-    public void initJGPush(Context context, boolean debugMode) {
-        JPushInterface.setDebugMode(debugMode);
+    public void initJGPush(Context context, boolean logEnable) {
+        JPushInterface.setDebugMode(logEnable);
         JPushInterface.init(context);
     }
 
-    public void initJGShare(Context context, boolean debugMode) {
-        JShareInterface.setDebugMode(debugMode);
+    public void initJGShare(Context context, boolean logEnable) {
+        JShareInterface.setDebugMode(logEnable);
         JShareInterface.init(context);
     }
 
-    public void initUMengAnalytics(Context context) {
-        UMConfigure.setLogEnabled(BuildConfig.DEBUG);
+    public void initUMengAnalytics(Context context,boolean logEnable) {
+        UMConfigure.setLogEnabled(logEnable);
         UMConfigure.init(context, getMetaData(context, "UMENG_APPKEY"), "Umeng", UMConfigure.DEVICE_TYPE_PHONE, getMetaData(context, "UMENG_SECRET"));
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
         PushAgent.getInstance(context).onAppStart();
     }
 
     //    返回token
-    public void initUMengPush(Context context, IUmengRegisterCallback iUmengRegisterCallback) {
-        UMConfigure.setLogEnabled(BuildConfig.DEBUG);
+    public void initUMengPush(Context context, IUmengRegisterCallback iUmengRegisterCallback,boolean logEnable) {
+        UMConfigure.setLogEnabled(logEnable);
 
         UMConfigure.init(context, getMetaData(context, "UMENG_APPKEY"), "Umeng", UMConfigure.DEVICE_TYPE_PHONE, getMetaData(context, "UMENG_SECRET"));
         PushAgent mPushAgent = PushAgent.getInstance(context);

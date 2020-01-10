@@ -2,35 +2,25 @@
 
 buildscript {
     repositories {
-//        maven {
-//            url = './release'
-//        }
+        maven { url 'https://jitpack.io' }
         google()
         jcenter()
-
-        maven {
-            url = 'http://172.20.2.114:8081/repository/maven-releases/'
-        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.1'
-//        classpath 'com.nj.baijiayun:pushplugin:1.0.13'
-        classpath 'com.nj.baijiayun:pushplugin:1.1.1'
+//        classpath 'com.nj.baijiayun:pushplugin:1.1.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath 'com.github.nj-baijiayun.PushPlugin:myplugin:1.0.10@jar'
     }
 }
 
 allprojects {
     repositories {
+        maven { url 'https://jitpack.io' }
         google()
         jcenter()
-        maven {
-            url = 'http://172.20.2.114:8081/repository/maven-releases/'
-        }
-
-
-
     }
 }
 

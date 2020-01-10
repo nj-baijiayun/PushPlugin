@@ -7,7 +7,7 @@
     <SinaWeibo
         AppKey="JGSinaShareKey"
         AppSecret="JGSinaShareSecret"
-        RedirectUrl="https://www.jiguang.cn"/>
+        RedirectUrl="Sina Redirect 地址"/>
 
     <QQ
         AppId="101675678"
@@ -16,10 +16,5 @@
     <Wechat
         AppId="wx8bf98806f514a1a7"
         AppSecret="d86ceb0ee8ec2b54b437bbfeee5dcd96"/>
-
-    <Facebook
-        AppId="JGFaceBookShareKeyDefault"
-        AppName="JGFaceBookShareSecretDefault"
-    />
 
 </DevInfor>

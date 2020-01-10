@@ -1,5 +1,10 @@
 apply plugin: 'java-library'
-apply from:'upload.gradle'
+//apply from:'upload.gradle'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.nj.baijiayun'
+version = '1.0.0'
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }

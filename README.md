@@ -9,14 +9,13 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven {
-            //release仓库地址
-            url = 'http://172.20.2.114:8081/repository/maven-releases/'
-        }
-        maven {
-            //snapshot仓库地址
-            url = 'http://172.20.2.114:8081/repository/maven-releases/'
-        }
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -24,16 +23,13 @@ allprojects {
 ##### 1.2 在工程目录`builg.gradle`下的`dependencies`下添加插件依赖
 ```
 //当前最新版本为1.1.0
- classpath 'com.nj.baijiayun:pushplugin:1.1.0'
+classpath 'com.github.nj-baijiayun.PushPlugin:myplugin:1.0.10@jar'
 ```
 ##### 1.3 在app目录`build.gradle`下添加push库依赖
 ```
-    //当前最新版本1.0.2
-    api 'com.nj.baijiayun:push:1.0.2'
-    //如果遇到和支付宝支付sdk冲突,加入以下代码
-    //        exclude module: 'utdid'
-    implementation 'com.nj.baijiayun:pushCompiler:1.0.0'
-    annotationProcessor 'com.nj.baijiayun:pushCompiler:1.0.0'
+    //当前最新版本1.0.10
+    implementation 'com.github.nj-baijiayun:PushPlugin:1.0.10'
+    annotationProcessor 'com.github.nj-baijiayun.PushPlugin:lib_compiler:1.0.10@jar'
 ```
 
 ##### 1.4 在app的`build.gradle`下添加配置推送配置信息
@@ -66,6 +62,7 @@ pluginExt {
         JGWxShareKey = "微信第三方key"
         JGQQShareSecret = "qq第三方秘钥"
         JGWxShareSecret = "微信第三方秘钥"
+        JGSinaRedirectUr = "Sina Redirect 地址"
     }
     uMengExt {
         UMengKey = "友盟key" //必填
@@ -87,10 +84,10 @@ pluginExt {
             }
         });
 
-        PushHelper.getInstance().initUMengAnalytics(this);
-        PushHelper.getInstance().initJGPush(this, true);
-        PushHelper.getInstance().initJGShare(this, true);
-        PushHelper.getInstance().initJGAnalytics(this,true);
+        PushHelper.getInstance().initUMengAnalytics(this,false);
+        PushHelper.getInstance().initJGPush(this, false);
+        PushHelper.getInstance().initJGShare(this, false);
+        PushHelper.getInstance().initJGAnalytics(this,false);
 ```
 ##### 1.6 给Application添加注解用于自动生成WXEntryActivity
 **(可选)** 如果包名和appId不一致 可以使用 @GenerateEntry(appid = "appId") 来设置appId

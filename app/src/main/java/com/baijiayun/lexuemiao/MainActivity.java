@@ -1,6 +1,7 @@
 package com.baijiayun.lexuemiao;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,13 @@ public class MainActivity extends MobHookActivity implements View.OnClickListene
         mBtnQq.setOnClickListener(this);
         mBtnWx.setOnClickListener(this);
         mBtnShare.setOnClickListener(this);
+
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                int i = 100 / 0;
+//            }
+//        }, 1000);
 
 
     }
@@ -110,27 +118,24 @@ public class MainActivity extends MobHookActivity implements View.OnClickListene
                 PushHelper.getInstance().shareWithPlatform(Wechat.Name, shareParams, new PlatActionListener() {
                     @Override
                     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                            Log.e("main1","onComplete");
+                        Log.e("main1", "onComplete");
                     }
 
                     @Override
                     public void onError(Platform platform, int i, int i1, Throwable throwable) {
-                        Log.e("main1","onError"+throwable.getMessage());
+                        Log.e("main1", "onError" + throwable.getMessage());
 
                     }
 
                     @Override
                     public void onCancel(Platform platform, int i) {
-                        Log.e("main1","onCancel");
+                        Log.e("main1", "onCancel");
 
                     }
                 });
                 break;
         }
     }
-
-
-
 
 
 }

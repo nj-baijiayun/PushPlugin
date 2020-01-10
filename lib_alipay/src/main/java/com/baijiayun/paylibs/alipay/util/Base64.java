@@ -1,4 +1,4 @@
-package com.baijiayun.lib_push.alipay.util;
+package com.baijiayun.paylibs.alipay.util;
 
 public final class Base64 {
 
