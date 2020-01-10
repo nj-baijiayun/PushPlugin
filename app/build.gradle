@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'pushplugin'
+apply plugin: 'pushplugin'
 
 
 /*
@@ -41,6 +41,26 @@ apply plugin: 'com.android.application'
 //
 //    }
 //}
+pluginExt {
+    applicationId = "com.baijiayun.lexuemiao"
+    packageName = "com.baijiayun.lexuemiao"
+    jiGuangExt {
+        jPushKey = "27b24cab17d3dccdbbc2bf06"    //必填
+        JGQQShareKey = "101675678"
+        JGWxShareKey = "wx8bf98806f514a1a7"
+        JGQQShareSecret = "fb58533718920a60718ffcc44b91f500"
+        JGWxShareSecret = "d86ceb0ee8ec2b54b437bbfeee5dcd96"
+//        JGSinaRedirectUr = "Sina Redirect 地址"
+    }
+    uMengExt {
+
+        UMengKey = "5d7ee7e2570df3d8ef000520" //必填
+        UMengSecret = "b31f682320fcfd8fcfa13614b8a101e6"  //必填
+//
+
+
+    }
+}
 
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -63,17 +83,14 @@ android {
         applicationId "com.baijiayun.lexuemiao"
         minSdkVersion 15
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 11
+        versionName "3.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-        }
-        debug {
             signingConfig signingConfigs.release
         }
     }
@@ -91,5 +108,6 @@ dependencies {
     implementation project(":lib_alipay")
     implementation project(":lib_compiler")
     annotationProcessor project(":lib_compiler")
-//    implementation 'com.github.nj-baijiayun:PushPlugin:1.0.4'
+//    implementation 'com.github.nj-baijiayun:PushPlugin:1.0.8'
+//    annotationProcessor 'com.github.nj-baijiayun.PushPlugin:lib_compiler:1.0.8@jar'
 }

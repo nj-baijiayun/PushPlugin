@@ -135,7 +135,7 @@ class MyPlugin implements Plugin<Project> {
                         JGWxShareSecretDefault      : "${project.pluginExt.jiGuangExt.JGWxShareSecret}",
                         JGFaceBookShareKeyDefault   : "${project.pluginExt.jiGuangExt.JGFaceBookShareKey}",
                         JGFaceBookShareSecretDefault: "${project.pluginExt.jiGuangExt.JGFaceBookShareSecret}",
-
+                        JGSinaRedirectUr            : "${project.pluginExt.jiGuangExt.JGSinaRedirectUr}",
                 ]
                 replaceText(new File("${assetsPath}${spear}JGShareSDK.xml"), shareEntryMap)
             }
@@ -150,9 +150,10 @@ class MyPlugin implements Plugin<Project> {
 
                             def manifestMap = [
                                     "UMENG_DEFAULT_META_KEY" : "${project.pluginExt.uMengExt.UMengKey}",
-                                    UMENG_DEFAULT_META_SECRET: "${project.pluginExt.uMengExt.UMengSecret}",
+                                    "UMENG_DEFAULT_META_SECRET" : "${project.pluginExt.uMengExt.UMengSecret}",
 //                                               "wxapi.WXEntryActivity"  : "WXEntryActivity"
                             ]
+                            println("DSG:"+manifestMap)
 
                             String fileContent = replaceText(manifestContent, manifestMap)
                             manifestOutputDirectory.file("AndroidManifest.xml").get().getAsFile().write(fileContent, "UTF-8")
@@ -194,7 +195,7 @@ class MyPlugin implements Plugin<Project> {
     <SinaWeibo
         AppKey="JGWeiboShareKeyDefault"
         AppSecret="JGWeiboShareSecretDefault"
-        RedirectUrl="https://www.jiguang.cn"/>
+        RedirectUrl="JGSinaRedirectUr"/>
 
     <QQ
         AppId="JGQQShareKeyDefault"

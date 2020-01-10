@@ -9,6 +9,7 @@ public class JiGuangExtension {
     def JGQQShareSecret = "JGQQShareSecretDefault"
     def JGWxShareSecret = "JGWxShareSecretDefault"
     def JGSinaShareSecret = "JGSinaShareSecret"
+    def JGSinaRedirectUr = "JGSinaRedirectUr"
     def JGFaceBookShareSecret = "JGFaceBookShareSecretDefault"
     def JGPushChannel = "developer-default"
 
