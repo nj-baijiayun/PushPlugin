@@ -7,7 +7,7 @@
     <SinaWeibo
         AppKey="JGSinaShareKey"
         AppSecret="JGSinaShareSecret"
-        RedirectUrl="https://www.jiguang.cn"/>
+        RedirectUrl="Sina Redirect 地址"/>
 
     <QQ
         AppId="101675678"

@@ -50,7 +50,7 @@ pluginExt {
         JGWxShareKey = "wx8bf98806f514a1a7"
         JGQQShareSecret = "fb58533718920a60718ffcc44b91f500"
         JGWxShareSecret = "d86ceb0ee8ec2b54b437bbfeee5dcd96"
-//        JGSinaRedirectUr = "Sina Redirect 地址"
+        JGSinaRedirectUr = "Sina Redirect 地址"
     }
     uMengExt {
 
@@ -104,10 +104,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation project(":lib_push")
-    implementation project(":lib_alipay")
-    implementation project(":lib_compiler")
-    annotationProcessor project(":lib_compiler")
-//    implementation 'com.github.nj-baijiayun:PushPlugin:1.0.8'
-//    annotationProcessor 'com.github.nj-baijiayun.PushPlugin:lib_compiler:1.0.8@jar'
+//    implementation project(":lib_push")
+//    implementation project(":lib_alipay")
+//    implementation project(":lib_compiler")
+//    annotationProcessor project(":lib_compiler")
+    implementation 'com.github.nj-baijiayun:PushPlugin:1.0.10'
+    annotationProcessor 'com.github.nj-baijiayun.PushPlugin:lib_compiler:1.0.10@jar'
 }
