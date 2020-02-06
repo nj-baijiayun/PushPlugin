@@ -28,7 +28,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation files ('libs/alipaySdk-15.6.8-20191021122455-noUtdid.aar')
+    api(name: 'alipaySdk-15.6.8-20191021122455-noUtdid', ext: 'aar')
     implementation "android.arch.lifecycle:runtime:1.1.1"
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 }
